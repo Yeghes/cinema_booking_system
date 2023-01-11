@@ -112,7 +112,7 @@ public class Admin {
 
         rs = dCon.getScheduledMoviesRecords();
         rs.next();
-        JLabel schedual_Lbl = new JLabel("Scheduled Movies:");
+        JLabel schedual_Lbl = new JLabel("Scheduled Movies: ");
         schedual_Lbl.setBounds(posX, posY, 500, 40);
         schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
         innerPanel.add(schedual_Lbl);
@@ -120,6 +120,7 @@ public class Admin {
         JLabel[] Schedual_id = new JLabel[n];
         JLabel[] movie_picture = new JLabel[n];
         JLabel[] movie_name = new JLabel[n];
+        JLabel[] movie_hall = new JLabel[n];
         JPanel[] movie_pnl = new JPanel[n];
         JLabel[] flag = new JLabel[n];
 
@@ -142,15 +143,20 @@ public class Admin {
             movie_name[i].setBounds(0, 0 + 200, 200, 35);
             movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+            movie_hall[i] = new JLabel("  " + rs.getString(4));
+            movie_hall[i].setBounds(0, 15 + 200, 200, 35);
+            movie_hall[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+
             Schedual_id[i].setVisible(false);
             movie_pnl[i] = new JPanel();
             movie_pnl[i].setLayout(null);
             movie_pnl[i].add(movie_picture[i]);
             movie_pnl[i].add(movie_name[i]);
+            movie_pnl[i].add(movie_hall[i]);
             movie_pnl[i].add(Schedual_id[i]);
             movie_pnl[i].add(flag[i]);
             movie_pnl[i].setBackground(Color.WHITE);
-            movie_pnl[i].setBounds(posX, posY, 200, 235);
+            movie_pnl[i].setBounds(posX, posY, 200, 245);
             movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             movie_pnl[i].addMouseListener(hnd);
             posX = (posX + 225) % 900;

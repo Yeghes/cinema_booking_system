@@ -48,7 +48,7 @@ public class DataConnector {
             if (rs.next()) {
                 return rs.getString(1);
             }
-//           else 
+//           else
 //           {
 //               JOptionPane.showMessageDialog(null, "Incorrect UserName or Password", "SignIn" , JOptionPane.INFORMATION_MESSAGE);
 //           }
@@ -111,7 +111,7 @@ public class DataConnector {
 
     public ResultSet getScheduledMoviesRecords() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate()");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate()");
 
             return rs;
 
@@ -123,7 +123,7 @@ public class DataConnector {
 
     public ResultSet getdMoviesDetailsBySchedual_ID(String MId) {
         try {
-            rs = stat.executeQuery("SELECT Movie_Title, Movie_Cover_Photo, SCHEDULED_MOVIE_PRICE, S_Date, Starting_time FROM movie,SCHEDULE where SCHEDULE_ID ='" + MId + "' And SCHEDULE.Movie_ID=Movie.Movie_ID");
+            rs = stat.executeQuery("SELECT Movie_Title, Movie_Cover_Photo, SCHEDULED_MOVIE_PRICE, S_Date, Starting_time, Scheduled_Movie_Price_Twin, Scheduled_Movie_Price_Vip FROM movie,SCHEDULE where SCHEDULE_ID ='" + MId + "' And SCHEDULE.Movie_ID=Movie.Movie_ID");
             return rs;
 
         } catch (Exception ex) {
@@ -281,15 +281,18 @@ public class DataConnector {
         return false;
     }
 
-    public int addMovieRecord(String title, String genere, String duration_time, FileInputStream image) {
+    public int addMovieRecord(String title, String genere, String duration_time, String description, String director, String summary, FileInputStream image) {
         try {
 
-            String sql = "Insert INTO movie (Movie_Title,Movie_Genere,Movie_Duration,Movie_Cover_Photo) values (?,?,?,?)";
+            String sql = "Insert INTO movie (Movie_Title,Movie_Genere,Movie_Duration,Movie_Description,Movie_Dir_Name,Movie_Summary,Movie_Cover_Photo) values (?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, title);
             pst.setString(2, genere);
             pst.setString(3, duration_time);
-            pst.setBinaryStream(4, image);
+            pst.setString(4, description);
+            pst.setString(5, director);
+            pst.setString(6, summary);
+            pst.setBinaryStream(7, image);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Movie added to record", "Completed", JOptionPane.INFORMATION_MESSAGE);
 
@@ -306,8 +309,10 @@ public class DataConnector {
             pst.setString(1, uid);
             pst.setString(2, given_id);
             pst.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Your seats are reserved :)", "Booking Successful", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "No more seats available :(", "Booking Failed", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -339,8 +344,8 @@ public class DataConnector {
         return null;
     }
 
-    public void addToSchedual(String mId, String price_txt, String stime, String etime, String datePicker, String sHall) {
-        String sql = "insert into Schedule (Movie_ID,Hall_Name,Starting_time,Ending_time,S_Date,Scheduled_Movie_Price) values (?,?,?,?,?,?) ";
+    public void addToSchedual(String mId, String price_txt, String stime, String etime, String datePicker, String sHall, String price_twin_txt, String price_vip_txt) {
+        String sql = "insert into Schedule (Movie_ID,Hall_Name,Starting_time,Ending_time,S_Date,Scheduled_Movie_Price,Scheduled_Movie_Price_Twin,Scheduled_Movie_Price_Vip) values (?,?,?,?,?,?,?,?) ";
         try {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, mId);
@@ -349,8 +354,10 @@ public class DataConnector {
             pst.setString(4, etime);
             pst.setString(5, datePicker);
             pst.setString(6, price_txt);
+            pst.setString(7, price_twin_txt);
+            pst.setString(8, price_vip_txt);
             pst.executeUpdate();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             //JOptionPane.showMessageDialog(null, "Try Again", "Opretion Failed", JOptionPane.INFORMATION_MESSAGE);
