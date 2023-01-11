@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JComboBox;
 
 public class MainGUI {
 
@@ -254,8 +255,7 @@ public class MainGUI {
                     addMovieFrame.summryTextField.setText("");
                 }
             } else if (e.getActionCommand().equals("Confirm Booking")) {
-
-                dCon.confirmBooking(id, MD.given_id);
+            	dCon.confirmBooking(id, MD.given_id, MD.sType.getSelectedItem().toString(), MD.sQuantity.getSelectedItem().toString());
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Cancle Booking")) {
 
@@ -442,8 +442,9 @@ public class MainGUI {
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
-            JLabel movie_name, movie_picture, rate, date, time, twin_rate, vip_rate;
+            JLabel movie_name, movie_picture, rate, date, time, twin_rate, vip_rate, seat_type, seat_quantity;
             JButton bookBtn;
+            // JComboBox sType, sQuantity;
 
             try {
 
@@ -469,9 +470,28 @@ public class MainGUI {
                 time = new JLabel("Time: " + rs.getString(5));
                 time.setBounds(320, 145, 200, 20);
 
+                // seat_type = new JLabel("Seat type");
+                // seat_type.setBounds(320, 300, 150, 40);
+                // sType = new JComboBox();
+                // sType.addItem("Normal seat");
+                // sType.addItem("Twin seat");
+                // sType.addItem("Vip seat");
+                // sType.setBounds(320, 330, 200, 30);
+                // seat_quantity = new JLabel("Quantity");
+                // seat_quantity.setBounds(550, 300, 150, 40);
+                // sQuantity = new JComboBox();
+                // sQuantity.addItem("1");
+                // sQuantity.addItem("2");
+                // sQuantity.addItem("3");
+                // sQuantity.addItem("4");
+                // sQuantity.addItem("5");
+                // sQuantity.addItem("6");
+                // sQuantity.addItem("7");
+                // sQuantity.setBounds(550, 330, 100, 30);
+
                 bookBtn = new JButton("Confirm Booking");
                 bookBtn.addActionListener(hnd);
-                bookBtn.setBounds(350, 400, 300, 50);
+                bookBtn.setBounds(320, 400, 330, 50);
                 bookBtn.setBackground(Color.black);
                 bookBtn.setForeground(Color.WHITE);
 
@@ -482,7 +502,12 @@ public class MainGUI {
                 MD.MDetailsFr.add(vip_rate);
                 MD.MDetailsFr.add(date);
                 MD.MDetailsFr.add(time);
+                // MD.MDetailsFr.add(seat_type);
+                // MD.MDetailsFr.add(sType);
+                // MD.MDetailsFr.add(seat_quantity);
+                // MD.MDetailsFr.add(sQuantity);
                 MD.MDetailsFr.add(bookBtn);
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {

@@ -145,7 +145,7 @@ public class DataConnector {
 
     public ResultSet getBookedMoviesRecords(String uID) {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo FROM movie,SCHEDULE join ticket where '" + uID + "'= USER_LOGIN_ID AND ticket.schedule_id = schedule.schedule_id AND schedule.Movie_ID = movie.Movie_ID");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, ticket.Seat_type, ticket.Quantity, SCHEDULE.S_Date, SCHEDULE.Starting_Time FROM movie,SCHEDULE join ticket where '" + uID + "'= USER_LOGIN_ID AND ticket.schedule_id = schedule.schedule_id AND schedule.Movie_ID = movie.Movie_ID");
 
             return rs;
 
@@ -159,7 +159,7 @@ public class DataConnector {
         searchText = searchText.trim();
         searchText = "%" + searchText + "%";
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND UPPER(movie_title) LIKE UPPER('" + searchText + "')");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND UPPER(movie_title) LIKE UPPER('" + searchText + "')");
 
             return rs;
 
@@ -302,12 +302,14 @@ public class DataConnector {
         return 0;
     }
 
-    public void confirmBooking(String uid, String given_id) {
+    public void confirmBooking(String uid, String given_id, String seat_type, String seat_quantity) {
         try {
-            String sql = "insert into Ticket (User_Login_ID,Schedule_ID) VALUES(?,?)";
+            String sql = "insert into Ticket (User_Login_ID,Schedule_ID,Seat_type,Quantity) VALUES(?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, uid);
             pst.setString(2, given_id);
+            pst.setString(3, seat_type);
+            pst.setString(4, seat_quantity);
             pst.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Your seats are reserved :)", "Booking Successful", JOptionPane.INFORMATION_MESSAGE);
