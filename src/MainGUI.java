@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JComboBox;
 
 public class MainGUI {
 
@@ -242,17 +243,19 @@ public class MainGUI {
                     JOptionPane.showMessageDialog(null, "Select a .jpg file", "Selection failed", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else if (e.getActionCommand().equals("Add to Record")) {
-                if (addMovieFrame.titleTextField.getText().trim().equals("") || addMovieFrame.genereTextField.getText().trim().equals("") || addMovieFrame.durationTextField.getText().trim().equals("")) {
+                if (addMovieFrame.titleTextField.getText().trim().equals("") || addMovieFrame.genereTextField.getText().trim().equals("") || addMovieFrame.durationTextField.getText().trim().equals("") || addMovieFrame.descTextField.getText().trim().equals("") || addMovieFrame.dirTextField.getText().trim().equals("") || addMovieFrame.summryTextField.getText().trim().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please Fill Every Field", "Insertion", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    dCon.addMovieRecord(addMovieFrame.titleTextField.getText(), addMovieFrame.genereTextField.getText(), addMovieFrame.durationTextField.getText(), addMovieFrame.imageStream);
+                    dCon.addMovieRecord(addMovieFrame.titleTextField.getText(), addMovieFrame.genereTextField.getText(), addMovieFrame.durationTextField.getText(), addMovieFrame.descTextField.getText(), addMovieFrame.dirTextField.getText(), addMovieFrame.summryTextField.getText(), addMovieFrame.imageStream);
                     addMovieFrame.titleTextField.setText("");
                     addMovieFrame.genereTextField.setText("");
                     addMovieFrame.durationTextField.setText("");
+                    addMovieFrame.descTextField.setText("");
+                    addMovieFrame.dirTextField.setText("");
+                    addMovieFrame.summryTextField.setText("");
                 }
             } else if (e.getActionCommand().equals("Confirm Booking")) {
-
-                dCon.confirmBooking(id, MD.given_id);
+            	dCon.confirmBooking(id, MD.given_id, MD.sType.getSelectedItem().toString(), MD.sQuantity.getSelectedItem().toString());
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Cancle Booking")) {
 
@@ -278,7 +281,7 @@ public class MainGUI {
                 schedule_a_movie(MD.given_id);
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Confirm Schedule")) {
-                dCon.addToSchedual(SFr.given_id,SFr.price_txt.getText(),SFr.stime_txt.getText(),SFr.etime_txt.getText(),SFr.datePicker.getJFormattedTextField().getText(),SFr.sHall.getSelectedItem().toString());
+                dCon.addToSchedual(SFr.given_id,SFr.price_txt.getText(),SFr.stime_txt.getText(),SFr.etime_txt.getText(),SFr.datePicker.getJFormattedTextField().getText(),SFr.sHall.getSelectedItem().toString(),SFr.twin_price_txt.getText(),SFr.vip_price_txt.getText());
                JOptionPane.showMessageDialog(null, "Schedule added", "Completed",  JOptionPane.INFORMATION_MESSAGE);
                 try {
                     Ad.updateDashboard();
@@ -368,7 +371,7 @@ public class MainGUI {
 
                 scheduleBtn = new JButton("Confirm Schedule");
                 scheduleBtn.addActionListener(hnd);
-                scheduleBtn.setBounds(350, 400, 300, 50);
+                scheduleBtn.setBounds(350, 490, 300, 50);
                 scheduleBtn.setBackground(Color.black);
                 scheduleBtn.setForeground(Color.WHITE);
                 scheduleBtn.addActionListener(hnd);
@@ -390,7 +393,7 @@ public class MainGUI {
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
             JLabel movie_name, movie_picture;
-            JButton scheduleBtn, deleteMovieBtn, editMovieBtn;
+            JButton scheduleBtn, deleteMovieBtn;
 
             try {
 
@@ -408,15 +411,11 @@ public class MainGUI {
 
                 scheduleBtn = new JButton("Add to Schedule");
                 scheduleBtn.addActionListener(hnd);
-                scheduleBtn.setBounds(350, 280, 300, 50);
+                scheduleBtn.setBounds(350, 340, 300, 50);
                 scheduleBtn.setBackground(Color.black);
                 scheduleBtn.setForeground(Color.WHITE);
 
-                editMovieBtn = new JButton("Edit Details");
-                editMovieBtn.addActionListener(hnd);
-                editMovieBtn.setBounds(350, 340, 300, 50);
-                editMovieBtn.setBackground(Color.black);
-                editMovieBtn.setForeground(Color.WHITE);
+
 
                 deleteMovieBtn = new JButton("Delete Movie");
                 deleteMovieBtn.addActionListener(hnd);
@@ -427,7 +426,7 @@ public class MainGUI {
                 MD.MDetailsFr.add(movie_name);
                 MD.MDetailsFr.add(movie_picture);
                 MD.MDetailsFr.add(scheduleBtn);
-                MD.MDetailsFr.add(editMovieBtn);
+
                 MD.MDetailsFr.add(deleteMovieBtn);
 
             } catch (SQLException ex) {
@@ -443,8 +442,9 @@ public class MainGUI {
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
-            JLabel movie_name, movie_picture, rate, date, time;
+            JLabel movie_name, movie_picture, rate, date, time, twin_rate, vip_rate, seat_type, seat_quantity;
             JButton bookBtn;
+            // JComboBox sType, sQuantity;
 
             try {
 
@@ -459,25 +459,55 @@ public class MainGUI {
                 movie_name = new JLabel(rs.getString(1));
                 movie_name.setBounds(320, 20, 250, 40);
                 movie_name.setFont(new Font("Times new roman", Font.BOLD, 28));
-                rate = new JLabel("Price: " + rs.getString(3) + "/-");
+                rate = new JLabel("Price: RM " + rs.getString(3));
                 rate.setBounds(320, 65, 200, 20);
+                twin_rate = new JLabel("Twin Price: RM " + rs.getString(6));
+                twin_rate.setBounds(320, 85, 200, 20);
+                vip_rate = new JLabel("VIP Price: RM " + rs.getString(7));
+                vip_rate.setBounds(320, 105, 200, 20);
                 date = new JLabel("Date: " + rs.getString(4));
-                date.setBounds(320, 85, 200, 20);
+                date.setBounds(320, 125, 200, 20);
                 time = new JLabel("Time: " + rs.getString(5));
-                time.setBounds(320, 105, 200, 20);
+                time.setBounds(320, 145, 200, 20);
+
+                // seat_type = new JLabel("Seat type");
+                // seat_type.setBounds(320, 300, 150, 40);
+                // sType = new JComboBox();
+                // sType.addItem("Normal seat");
+                // sType.addItem("Twin seat");
+                // sType.addItem("Vip seat");
+                // sType.setBounds(320, 330, 200, 30);
+                // seat_quantity = new JLabel("Quantity");
+                // seat_quantity.setBounds(550, 300, 150, 40);
+                // sQuantity = new JComboBox();
+                // sQuantity.addItem("1");
+                // sQuantity.addItem("2");
+                // sQuantity.addItem("3");
+                // sQuantity.addItem("4");
+                // sQuantity.addItem("5");
+                // sQuantity.addItem("6");
+                // sQuantity.addItem("7");
+                // sQuantity.setBounds(550, 330, 100, 30);
 
                 bookBtn = new JButton("Confirm Booking");
                 bookBtn.addActionListener(hnd);
-                bookBtn.setBounds(350, 400, 300, 50);
+                bookBtn.setBounds(320, 400, 330, 50);
                 bookBtn.setBackground(Color.black);
                 bookBtn.setForeground(Color.WHITE);
 
                 MD.MDetailsFr.add(movie_name);
                 MD.MDetailsFr.add(movie_picture);
                 MD.MDetailsFr.add(rate);
+                MD.MDetailsFr.add(twin_rate);
+                MD.MDetailsFr.add(vip_rate);
                 MD.MDetailsFr.add(date);
                 MD.MDetailsFr.add(time);
+                // MD.MDetailsFr.add(seat_type);
+                // MD.MDetailsFr.add(sType);
+                // MD.MDetailsFr.add(seat_quantity);
+                // MD.MDetailsFr.add(sQuantity);
                 MD.MDetailsFr.add(bookBtn);
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {
