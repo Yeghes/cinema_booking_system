@@ -44,6 +44,7 @@ public class MainGUI {
     AddFood addFoodFrame;
     MovieDetails MD;
     FoodDetails FD;
+    FoodDetailsUser FDUSR;
     Scheduling SFr;
     String id;
 
@@ -327,7 +328,7 @@ public class MainGUI {
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Food")) {
                 System.out.println("in delete food function");
-                dCon.deleteFood(FD.given_id);
+                dCon.deleteFood(FDUSR.given_id);
                 try {
                     Ad.updateDashboard();
                 } catch (SQLException ex) {
@@ -335,7 +336,18 @@ public class MainGUI {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                FD.FDetailsFr.dispose();
+                FDUSR.FDetailsFr.dispose();
+            } else if (e.getActionCommand().equals("Order Food")) {
+                System.out.println("in order food function");
+                dCon.confirmFood(id, FDUSR.datePicker.getJFormattedTextField().getText(), FDUSR.given_id, FDUSR.sQuantity.getSelectedItem().toString());
+                try {
+                    Ad.updateDashboard();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                FDUSR.FDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Add to Schedule")) {
                 schedule_a_movie(MD.given_id);
                 MD.MDetailsFr.dispose();
@@ -615,6 +627,47 @@ public class MainGUI {
             }
         }
 
+        public void dashboard_food_Details_user_function(String fid) {
+            FDUSR = new FoodDetailsUser();
+            FDUSR.FDetailsFr.setLocationRelativeTo(fr);
+            FDUSR.FDetailsFr.setIconImage(logo.getImage());
+            FDUSR.given_id = fid;
+            JLabel movie_name, movie_picture, rate, date, time;
+            JButton cancleBookBtn;
+
+            try {
+
+                ResultSet rs = dCon.getFoodDetailsByFood_ID(fid);
+                rs.next();
+
+                Blob b = rs.getBlob(3);
+                Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(300, 500, Image.SCALE_SMOOTH);
+
+                movie_picture = new JLabel(new ImageIcon(img));
+                movie_picture.setBounds(0, 0, 300, 500);
+                movie_name = new JLabel(rs.getString(1));
+                movie_name.setBounds(320, 20, 250, 40);
+                movie_name.setFont(new Font("Times new roman", Font.BOLD, 28));
+                rate = new JLabel("Price: " + rs.getString(2) + "/-");
+                rate.setBounds(320, 65, 200, 20);
+
+                cancleBookBtn = new JButton("Order Food");
+                cancleBookBtn.addActionListener(hnd);
+                cancleBookBtn.setBounds(350, 400, 300, 50);
+                cancleBookBtn.setBackground(Color.black);
+                cancleBookBtn.setForeground(Color.WHITE);
+
+                FDUSR.FDetailsFr.add(movie_name);
+                FDUSR.FDetailsFr.add(movie_picture);
+                FDUSR.FDetailsFr.add(rate);
+                FDUSR.FDetailsFr.add(cancleBookBtn);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         @Override
         public void mouseClicked(MouseEvent e) {
             JPanel temp = (JPanel) e.getSource();
@@ -634,6 +687,9 @@ public class MainGUI {
             } else if (flag.getText().equals("fds")) {
                 JLabel selected_id = (JLabel) temp.getComponent(2);
                 dashboard_food_Details_function(selected_id.getText());
+            } else if (flag.getText().equals("fdsusr")) {
+                JLabel selected_id = (JLabel) temp.getComponent(2);
+                dashboard_food_Details_user_function(selected_id.getText());
             }
 
         }

@@ -421,11 +421,210 @@ public class DataConnector {
         return null;
     }
 
-     public void deleteFood(String given_id) {
+    public void deleteFood(String given_id) {
         try {
             stat.executeUpdate("Delete From food where Food_ID='" + given_id + "'");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Try Again", "Opretion Failed", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    // Hall points
+    // A - 3d
+    // B - Imax
+    // C - Dbox
+    // D - Commersion
+    // E - small
+    // getting scheduled movies by group
+    public ResultSet getScheduledMoviesRecordsByHallA() {
+        try {
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = '3d_hall'");
+
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfMoviesTobePlayedByHallA() {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(movie_id) from schedule where s_date >= sysdate() AND SCHEDULE.Hall_Name = '3d_hall'");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public ResultSet getScheduledMoviesRecordsByHallB() {
+        try {
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = 'Imax_hall'");
+
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfMoviesTobePlayedByHallB() {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(movie_id) from schedule where s_date >= sysdate() AND SCHEDULE.Hall_Name = 'Imax_hall'");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public ResultSet getScheduledMoviesRecordsByHallC() {
+        try {
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'D-box_hall_1' OR SCHEDULE.Hall_Name = 'D-box_hall_2')");
+
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfMoviesTobePlayedByHallC() {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(movie_id) from schedule where s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'D-box_hall_1' OR SCHEDULE.Hall_Name = 'D-box_hall_2')");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public ResultSet getScheduledMoviesRecordsByHallD() {
+        try {
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'commercial_huge_1_hall' OR SCHEDULE.Hall_Name = 'commercial_huge_2_hall')");
+
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfMoviesTobePlayedByHallD() {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(movie_id) from schedule where s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'commercial_huge_1_hall' OR SCHEDULE.Hall_Name = 'commercial_huge_2_hall')");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public ResultSet getScheduledMoviesRecordsByHallE() {
+        try {
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'small_hall_1' OR SCHEDULE.Hall_Name = 'small_hall_2')");
+
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfMoviesTobePlayedByHallE() {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(movie_id) from schedule where s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'small_hall_1' OR SCHEDULE.Hall_Name = 'small_hall_2')");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public void confirmFood(String uid, String date, String food_id, String quantity) {
+	 System.out.println("in confirm booking function");
+        try {
+            String sql = "insert into foodbooking (User_Login_ID,S_Date,Food_ID,Quantity) VALUES(?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, uid);
+            pst.setString(2, date);
+            pst.setString(3, food_id);
+            pst.setString(4, quantity);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Food orders confirmed:)", "Order Successful", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Food orders failed :(", "BookiOrderng Failed", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public int getNumberOfFoodOrdered(String uid) {
+        try {
+            int n = 0;
+            ResultSet r = stat.executeQuery(" Select count(FoodBook_ID) from foodbooking where User_Login_ID='" + uid + "'");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return 0;
+    }
+
+    public ResultSet getFoodOrderedByUser(String uid) {
+        try {
+            ResultSet rs = stat.executeQuery(" Select foodbooking.S_Date, foodbooking.Quantity, food.Food_Title, food.Food_Price, food.Food_Cover_Photo from foodbooking,food where foodbooking.Food_ID=food.Food_ID AND foodbooking.User_Login_ID='" + uid + "' AND foodbooking.S_Date >= sysdate()");
+            return rs;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return null;
+    }
+
 }

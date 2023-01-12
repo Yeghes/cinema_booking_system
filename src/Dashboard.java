@@ -25,7 +25,7 @@ public class Dashboard {
     JButton pswdBtn;
     DataConnector dCon;
     ImageIcon icon;
-    ResultSet rs;
+    ResultSet rs, ps;
     ImageIcon ic;
     Blob bl;
     ScrollPane scrollPane;
@@ -116,6 +116,12 @@ public class Dashboard {
             rs = dCon.getBookedMoviesRecords(uID);
             rs.next();
 
+            JLabel schedual_Lbl = new JLabel("Your Movies: ");
+            schedual_Lbl.setBounds(posX, posY, 500, 40);
+            schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+            innerPanel.add(schedual_Lbl);
+            posY = posY + 45;
+
             JLabel[] Schedual_id = new JLabel[n];
             JLabel[] movie_picture = new JLabel[n];
             JLabel[] movie_name = new JLabel[n];
@@ -152,15 +158,15 @@ public class Dashboard {
                 movie_hall[i] = new JLabel("  Hall:   " + rs.getString(4));
                 movie_hall[i].setBounds(0, 23 + 200, 200, 35);
                 movie_hall[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
-                
+
                 movie_dtntime[i] = new JLabel("  Date:  " + rs.getString(7) + " (" + rs.getString(8) + ")");
                 movie_dtntime[i].setBounds(0, 32 + 210, 200, 35);
                 movie_dtntime[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
-                
+
                 ticket_seat[i] = new JLabel("  Seat:   " + rs.getString(5) + " (" + rs.getString(6) + ")");
                 ticket_seat[i].setBounds(0, 48 + 210, 200, 35);
                 ticket_seat[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
-                
+
 
                 Schedual_id[i].setVisible(false);
                 movie_pnl[i] = new JPanel();
@@ -186,7 +192,91 @@ public class Dashboard {
                 rs.next();
             }
         }
-        innerPanel.setPreferredSize(new Dimension(950, posY + 250));
+
+        int q = dCon.getNumberOfFoodOrdered(uID);
+
+        if (q > 0) {
+            posY = posY + 315;
+            posX = 100;
+            JLabel avlbl_food_Lbl = new JLabel("Your Foods: ");
+            avlbl_food_Lbl.setBounds(posX, posY, 500, 40);
+            avlbl_food_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+            innerPanel.add(avlbl_food_Lbl);
+            posY = posY + 45;
+
+            ps = dCon.getFoodOrderedByUser(uID);
+            ps.next();
+
+            JLabel[] movie_picture = new JLabel[q];
+            JLabel[] movie_name = new JLabel[q];
+            JLabel[] movie_hall = new JLabel[q];
+            JLabel[] movie_dtntime = new JLabel[q];
+            JLabel[] ticket_seat = new JLabel[q];
+            JLabel[] detail_separator = new JLabel[q];
+            JPanel[] movie_pnl = new JPanel[q];
+
+            for (int i = 0; i < q; i++) {
+
+                Blob b = ps.getBlob(5);
+                Image img;
+                try {
+                    img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                movie_picture[i] = new JLabel(icon);
+                movie_picture[i].setBounds(0, 0, 200, 200);
+
+                movie_name[i] = new JLabel("  " + ps.getString(3));
+                movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                detail_separator[i] = new JLabel("________________________");
+                detail_separator[i].setBounds(0, 10 + 200, 200, 35);
+                detail_separator[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+
+                movie_hall[i] = new JLabel("  Price:   " + ps.getString(4));
+                movie_hall[i].setBounds(0, 23 + 200, 200, 35);
+                movie_hall[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+
+                movie_dtntime[i] = new JLabel("  Date:  " + ps.getString(1));
+                movie_dtntime[i].setBounds(0, 32 + 210, 200, 35);
+                movie_dtntime[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+
+                ticket_seat[i] = new JLabel("  Quantity:   " + ps.getString(2));
+                ticket_seat[i].setBounds(0, 48 + 210, 200, 35);
+                ticket_seat[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+
+
+
+                movie_pnl[i] = new JPanel();
+                movie_pnl[i].setLayout(null);
+                movie_pnl[i].add(movie_picture[i]);
+                movie_pnl[i].add(movie_name[i]);
+                movie_pnl[i].add(movie_hall[i]);
+                movie_pnl[i].add(movie_dtntime[i]);
+                movie_pnl[i].add(ticket_seat[i]);
+                // movie_pnl[i].add(Schedual_id[i]);
+
+                movie_pnl[i].setBackground(Color.WHITE);
+                movie_pnl[i].setBounds(posX, posY, 200, 305);
+                movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                movie_pnl[i].addMouseListener(hnd);
+                posX = (posX + 225) % 900;
+
+                if (posX == 100 && i != q - 1) {
+                    posY = posY + 315;
+                }
+
+                innerPanel.add(movie_pnl[i]);
+                ps.next();
+            }
+        }
+
+
+        innerPanel.setPreferredSize(new Dimension(950, posY + 325));
         scrollPane.add(innerPanel);
         dashboardPnl.add(scrollPane);
     }

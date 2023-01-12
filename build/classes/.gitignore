@@ -1,2 +1,7 @@
 /AddFood.class
 /FoodDetails.class
+<<<<<<< HEAD
+=======
+/FoodDetailsUser.class
+/FoodDetailsUser$DateLabelFormatter.class
+>>>>>>> feature/add-user-food-order
