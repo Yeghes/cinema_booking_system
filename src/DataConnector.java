@@ -366,4 +366,66 @@ public class DataConnector {
         }
     }
 
+    public int addFoodRecord(String title, String price, FileInputStream image) {
+        try {
+            String sql = "Insert INTO food (Food_Title,Food_Price,Food_Cover_Photo) values (?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, title);
+            pst.setString(2, price);
+            pst.setBinaryStream(3, image);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Food added to record", "Completed", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Insertion Not Successful", "Insertion Failed", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return 0;
+    }
+
+    public int getCountOfAllFood() {
+        int n = 0;
+        ResultSet r;
+        try {
+            r = stat.executeQuery(" Select count(Food_ID) from food");
+            if (r.next()) {
+                n = r.getInt(1);
+            }
+            r.close();
+            return n;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ResultSet getAllFoodRecord() {
+        try {
+            rs = stat.executeQuery("SELECT Food_ID, Food_Title, Food_Cover_Photo FROM food");
+
+            return rs;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "SignIn Not Successful", "SignIn", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return null;
+    }
+
+    public ResultSet getFoodDetailsByFood_ID(String FId) {
+        try {
+            rs = stat.executeQuery("SELECT Food_Title, Food_Price, Food_Cover_Photo FROM food where Food_ID ='" + FId + "'");
+            return rs;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+     public void deleteFood(String given_id) {
+        try {
+            stat.executeUpdate("Delete From food where Food_ID='" + given_id + "'");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Try Again", "Opretion Failed", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 }

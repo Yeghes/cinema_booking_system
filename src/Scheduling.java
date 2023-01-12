@@ -90,6 +90,7 @@ public class Scheduling {
         schedulingFr.setResizable(false);
         schedulingFr.setVisible(true);
     }
+   
 
     public class DateLabelFormatter extends AbstractFormatter {
 

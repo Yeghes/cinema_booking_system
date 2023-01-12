@@ -24,6 +24,7 @@ public class Admin {
     JButton lOutBtn;
     JButton pswdBtn;
     JButton addBtn;
+    JButton addFoodBtn;
     DataConnector dCon;
     ImageIcon icon;
     ResultSet rs;
@@ -63,6 +64,11 @@ public class Admin {
         addBtn.setBorderPainted(false);
         addBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        addFoodBtn = new JButton("Add Food");
+        addFoodBtn.setFocusPainted(false);
+        addFoodBtn.setBorderPainted(false);
+        addFoodBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         scrollPane = new ScrollPane();
 
         scrollPane.setBounds(0, 100, 1095, 500);
@@ -80,9 +86,13 @@ public class Admin {
 
         userNameLbl.setBounds(0, 30, 500, 30);
 
-        addBtn.setBounds(610, 30, 100, 30);
+        addBtn.setBounds(520, 30, 90, 30);
         addBtn.setBackground(Color.BLACK);
         addBtn.setForeground(Color.WHITE);
+
+        addFoodBtn.setBounds(620, 30, 90, 30);
+        addFoodBtn.setBackground(Color.BLACK);
+        addFoodBtn.setForeground(Color.WHITE);
 
         pswdBtn.setBounds(710, 30, 150, 30);
         pswdBtn.setBackground(Color.BLACK);
@@ -93,11 +103,13 @@ public class Admin {
         lOutBtn.setForeground(Color.WHITE);
 
         addBtn.addActionListener(hnd);
+        addFoodBtn.addActionListener(hnd);
         pswdBtn.addActionListener(hnd);
         lOutBtn.addActionListener(hnd);
 
         dashboardPnl.add(userNameLbl);
         dashboardPnl.add(addBtn);
+        dashboardPnl.add(addFoodBtn);
         dashboardPnl.add(pswdBtn);
         dashboardPnl.add(lOutBtn);
         dashboardPnl.setVisible(false);
@@ -118,6 +130,9 @@ public class Admin {
         innerPanel.add(schedual_Lbl);
         posY = posY + 45;
         JLabel[] Schedual_id = new JLabel[n];
+        JLabel[] Food_id = new JLabel[n];
+        JLabel[] food_picture = new JLabel[n];
+        JLabel[] food_name = new JLabel[n];
         JLabel[] movie_picture = new JLabel[n];
         JLabel[] movie_name = new JLabel[n];
         JLabel[] movie_hall = new JLabel[n];
@@ -227,6 +242,67 @@ public class Admin {
         }
 
         innerPanel.setPreferredSize(new Dimension(950, posY + 250));
+
+        posX = 100;
+        posY = posY + 250;
+        n = dCon.getCountOfAllFood();
+
+        rs = dCon.getAllFoodRecord();
+        rs.next();
+        JLabel allFoodLbl = new JLabel("Available Foods:");
+        allFoodLbl.setBounds(posX, posY + 20, 500, 40);
+        allFoodLbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+        innerPanel.add(allFoodLbl);
+        posY = posY + 65;
+
+        Food_id = new JLabel[n];
+        food_picture = new JLabel[n];
+        food_name = new JLabel[n];
+        movie_pnl = new JPanel[n];
+        flag = new JLabel[n];
+
+        for (int i = 0; i < n; i++) {
+            flag[i] = new JLabel("fds");
+            Blob b = rs.getBlob(3);
+            Image img;
+            try {
+                img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                icon = new ImageIcon(img);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            Food_id[i] = new JLabel(rs.getString(1));
+            food_picture[i] = new JLabel(icon);
+            food_picture[i].setBounds(0, 0, 200, 200);
+
+            food_name[i] = new JLabel("  " + rs.getString(2));
+            food_name[i].setBounds(0, 0 + 200, 200, 35);
+            food_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+            Food_id[i].setVisible(false);
+            movie_pnl[i] = new JPanel();
+            movie_pnl[i].setLayout(null);
+            movie_pnl[i].add(food_picture[i]);
+            movie_pnl[i].add(food_name[i]);
+            movie_pnl[i].add(Food_id[i]);
+            movie_pnl[i].add(flag[i]);
+            movie_pnl[i].setBackground(Color.WHITE);
+            movie_pnl[i].setBounds(posX, posY, 200, 235);
+            movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            movie_pnl[i].addMouseListener(hnd);
+            posX = (posX + 225) % 900;
+
+            if (posX == 100 && i != n - 1) {
+                posY = posY + 250;
+            }
+
+            innerPanel.add(movie_pnl[i]);
+            rs.next();
+        }
+
+        innerPanel.setPreferredSize(new Dimension(950, posY + 250));
+
         scrollPane.add(innerPanel);
         dashboardPnl.add(scrollPane);
 

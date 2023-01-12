@@ -41,7 +41,9 @@ public class MainGUI {
     Admin Ad;
     ChangePass changePassFrame;
     AddMovie addMovieFrame;
+    AddFood addFoodFrame;
     MovieDetails MD;
+    FoodDetails FD;
     Scheduling SFr;
     String id;
 
@@ -197,11 +199,28 @@ public class MainGUI {
                 addMovieFrame.cancel.addActionListener(hnd);
                 addMovieFrame.choosePhoto.addActionListener(hnd);
                 addMovieFrame.addRecordBtn.addActionListener(hnd);
+            } else if (e.getActionCommand().equals("Add Food")) {
+                addFoodFrame = new AddFood();
+                addFoodFrame.miniFrame.setLocationRelativeTo(fr);
+                addFoodFrame.miniFrame.setIconImage(logo.getImage());
+                addFoodFrame.cancel.addActionListener(hnd);
+                addFoodFrame.choosePhoto.addActionListener(hnd);
+                addFoodFrame.addFoodBtn.addActionListener(hnd);
             } else if (e.getActionCommand().equals("Cancel")) {
                 if (addMovieFrame != null) {
                     addMovieFrame.miniFrame.dispose();
                 } else if (changePassFrame != null) {
                     changePassFrame.miniFrame.dispose();
+                } else if (addFoodFrame != null) {
+                    addFoodFrame.miniFrame.dispose();
+                }
+            }  else if (e.getActionCommand().equals("Close")) {
+                if (addFoodFrame != null) {
+                    addFoodFrame.miniFrame.dispose();
+                } else if (changePassFrame != null) {
+                    changePassFrame.miniFrame.dispose();
+                } else if (addMovieFrame != null) {
+                    addMovieFrame.miniFrame.dispose();
                 }
             } else if (e.getActionCommand().equals("Confirm")) {
                 int n = dCon.updatePassword(sIn.CNIC.getText(), changePassFrame.oldPass.getText(), changePassFrame.newPass.getText());
@@ -242,6 +261,27 @@ public class MainGUI {
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Select a .jpg file", "Selection failed", JOptionPane.INFORMATION_MESSAGE);
                 }
+            }  else if (e.getActionCommand().equals("Upload Image")) {
+                JFileChooser chooser = new JFileChooser(new File(System.getProperty("user.home")));
+                chooser.showOpenDialog(fr);
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "png");
+                chooser.addChoosableFileFilter(filter);
+                chooser.setAcceptAllFileFilterUsed(false);
+                File pic = chooser.getSelectedFile();
+                System.out.println("in here mahes");
+                try {
+                    if (pic != null) {
+                        String path = pic.getAbsolutePath();
+                        File image = new File(path);
+                        System.out.println("in here mahes _1");
+                        addFoodFrame.preview.setText(pic.getName());
+                        addFoodFrame.imageStream = new FileInputStream(image);
+                        System.out.println("in here mahes_2");
+                    }
+
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Select a .jpg file", "Selection failed", JOptionPane.INFORMATION_MESSAGE);
+                }
             } else if (e.getActionCommand().equals("Add to Record")) {
                 if (addMovieFrame.titleTextField.getText().trim().equals("") || addMovieFrame.genereTextField.getText().trim().equals("") || addMovieFrame.durationTextField.getText().trim().equals("") || addMovieFrame.descTextField.getText().trim().equals("") || addMovieFrame.dirTextField.getText().trim().equals("") || addMovieFrame.summryTextField.getText().trim().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please Fill Every Field", "Insertion", JOptionPane.INFORMATION_MESSAGE);
@@ -253,6 +293,14 @@ public class MainGUI {
                     addMovieFrame.descTextField.setText("");
                     addMovieFrame.dirTextField.setText("");
                     addMovieFrame.summryTextField.setText("");
+                }
+            }  else if (e.getActionCommand().equals("Save Food")) {
+                if (addFoodFrame.titleTextField.getText().trim().equals("") || addFoodFrame.priceTextField.getText().trim().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please Fill Every Field", "Insertion", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    dCon.addFoodRecord(addFoodFrame.titleTextField.getText(), addFoodFrame.priceTextField.getText(), addFoodFrame.imageStream);
+                    addFoodFrame.titleTextField.setText("");
+                    addFoodFrame.priceTextField.setText("");
                 }
             } else if (e.getActionCommand().equals("Confirm Booking")) {
             	dCon.confirmBooking(id, MD.given_id, MD.sType.getSelectedItem().toString(), MD.sQuantity.getSelectedItem().toString());
@@ -268,7 +316,7 @@ public class MainGUI {
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Movie")) {
 
-                dCon.deleteMovie(MD.given_id);
+                dCon.deleteFood(MD.given_id);
                 try {
                     Ad.updateDashboard();
                 } catch (SQLException ex) {
@@ -277,6 +325,17 @@ public class MainGUI {
                     ex.printStackTrace();
                 }
                 MD.MDetailsFr.dispose();
+            } else if (e.getActionCommand().equals("Delete Food")) {
+                System.out.println("in delete food function");
+                dCon.deleteFood(FD.given_id);
+                try {
+                    Ad.updateDashboard();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                FD.FDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Add to Schedule")) {
                 schedule_a_movie(MD.given_id);
                 MD.MDetailsFr.dispose();
@@ -296,7 +355,7 @@ public class MainGUI {
         }
 
         public void dashboard_movie_Details_function(String sid) {
-            MD = new MovieDetails();
+            MD = new MovieDetails("1");
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
@@ -388,7 +447,7 @@ public class MainGUI {
         }
 
         public void movie_basic_Details_function(String sid) {
-            MD = new MovieDetails();
+            MD = new MovieDetails("1");
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
@@ -438,7 +497,7 @@ public class MainGUI {
 
         public void homePage_movie_Details_function(String sid) {
 
-            MD = new MovieDetails();
+            MD = new MovieDetails("2");
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
@@ -515,6 +574,47 @@ public class MainGUI {
             }
         }
 
+        public void dashboard_food_Details_function(String fid) {
+            FD = new FoodDetails();
+            FD.FDetailsFr.setLocationRelativeTo(fr);
+            FD.FDetailsFr.setIconImage(logo.getImage());
+            FD.given_id = fid;
+            JLabel movie_name, movie_picture, rate, date, time;
+            JButton cancleBookBtn;
+
+            try {
+
+                ResultSet rs = dCon.getFoodDetailsByFood_ID(fid);
+                rs.next();
+
+                Blob b = rs.getBlob(3);
+                Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(300, 500, Image.SCALE_SMOOTH);
+
+                movie_picture = new JLabel(new ImageIcon(img));
+                movie_picture.setBounds(0, 0, 300, 500);
+                movie_name = new JLabel(rs.getString(1));
+                movie_name.setBounds(320, 20, 250, 40);
+                movie_name.setFont(new Font("Times new roman", Font.BOLD, 28));
+                rate = new JLabel("Price: " + rs.getString(2) + "/-");
+                rate.setBounds(320, 65, 200, 20);
+
+                cancleBookBtn = new JButton("Delete Food");
+                cancleBookBtn.addActionListener(hnd);
+                cancleBookBtn.setBounds(350, 400, 300, 50);
+                cancleBookBtn.setBackground(Color.black);
+                cancleBookBtn.setForeground(Color.WHITE);
+
+                FD.FDetailsFr.add(movie_name);
+                FD.FDetailsFr.add(movie_picture);
+                FD.FDetailsFr.add(rate);
+                FD.FDetailsFr.add(cancleBookBtn);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         @Override
         public void mouseClicked(MouseEvent e) {
             JPanel temp = (JPanel) e.getSource();
@@ -531,6 +631,9 @@ public class MainGUI {
             } else if (flag.getText().equals("sm")) {
                 JLabel selected_id = (JLabel) temp.getComponent(2);
                 dashboard_movie_Details_function(selected_id.getText());
+            } else if (flag.getText().equals("fds")) {
+                JLabel selected_id = (JLabel) temp.getComponent(2);
+                dashboard_food_Details_function(selected_id.getText());
             }
 
         }
