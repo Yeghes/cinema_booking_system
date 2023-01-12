@@ -126,48 +126,340 @@ public class HomePage {
             empty.setBounds(posX, posY, 900, 100);
             innerPnl.add(empty);
         } else {
-            rs = dCon.getScheduledMoviesRecords();
-            rs.next();
+            int fd_cnt = dCon.getCountOfAllFood();
+            int a = dCon.getNumberOfMoviesTobePlayedByHallA();
+            int f = dCon.getNumberOfMoviesTobePlayedByHallB();
+            int c = dCon.getNumberOfMoviesTobePlayedByHallC();
+            int d = dCon.getNumberOfMoviesTobePlayedByHallD();
+            int e = dCon.getNumberOfMoviesTobePlayedByHallE();
 
-            JLabel[] Schedual_id = new JLabel[n];
-            JLabel[] movie_picture = new JLabel[n];
-            JLabel[] movie_name = new JLabel[n];
-            JPanel[] movie_pnl = new JPanel[n];
-            JLabel[] flag=new JLabel[n];
-            
-            for (int i = 0; i < n; i++) {
-                flag[i]=new JLabel("h");
-                Blob b = rs.getBlob(3);
-                Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                icon = new ImageIcon(img);
+            if(fd_cnt > 0){
+                rs = dCon.getAllFoodRecord();
+                rs.next();
 
-                Schedual_id[i] = new JLabel(rs.getString(1));
-                movie_picture[i] = new JLabel(icon);
-                movie_picture[i].setBounds(0, 0, 200, 200);
+                JLabel schedual_Lbl = new JLabel("Available Foods:  ");
+                schedual_Lbl.setBounds(posX, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
 
-                movie_name[i] = new JLabel("  " + rs.getString(2));
-                movie_name[i].setBounds(0, 0 + 200, 200, 35);
-                movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
-                Schedual_id[i].setVisible(false);
-                movie_pnl[i] = new JPanel();
-                movie_pnl[i].setLayout(null);
-                movie_pnl[i].add(movie_picture[i]);
-                movie_pnl[i].add(movie_name[i]);
-                movie_pnl[i].add(Schedual_id[i]);
-                movie_pnl[i].add(flag[i]);
-                movie_pnl[i].setBackground(Color.WHITE);
-                movie_pnl[i].setBounds(posX, posY, 200, 235);
-                movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                movie_pnl[i].addMouseListener(hnd);
-                posX = (posX + 225) % 900;
+                JLabel[] Schedual_id = new JLabel[fd_cnt];
+                JLabel[] movie_picture = new JLabel[fd_cnt];
+                JLabel[] movie_name = new JLabel[fd_cnt];
+                JPanel[] movie_pnl = new JPanel[fd_cnt];
+                JLabel[] flag=new JLabel[fd_cnt];
 
-                if (posX == 100 && i != n - 1) {
+                for (int i = 0; i < fd_cnt; i++) {
+                    flag[i]=new JLabel("fdsusr");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != fd_cnt - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
+            }
+
+            if(a > 0){
+                rs = dCon.getScheduledMoviesRecordsByHallA();
+                rs.next();
+                if(fd_cnt > 0) {
+                    posX = 100;
                     posY = posY + 250;
                 }
+                JLabel schedual_Lbl = new JLabel("3D Hall Movies: ");
+                schedual_Lbl.setBounds(posX, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
 
-                innerPnl.add(movie_pnl[i]);
+                JLabel[] Schedual_id = new JLabel[a];
+                JLabel[] movie_picture = new JLabel[a];
+                JLabel[] movie_name = new JLabel[a];
+                JPanel[] movie_pnl = new JPanel[a];
+                JLabel[] flag=new JLabel[a];
+
+                for (int i = 0; i < a; i++) {
+                    flag[i]=new JLabel("h");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != a - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
+            }
+
+            if(f > 0){
+                rs = dCon.getScheduledMoviesRecordsByHallB();
                 rs.next();
+                if(a > 0) {
+                    posX = 100;
+                    posY = posY + 250;
+                }
+                JLabel schedual_Lbl = new JLabel("IMAX Hall Movies: ");
+                schedual_Lbl.setBounds(posX, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
+
+
+                JLabel[] Schedual_id = new JLabel[f];
+                JLabel[] movie_picture = new JLabel[f];
+                JLabel[] movie_name = new JLabel[f];
+                JPanel[] movie_pnl = new JPanel[f];
+                JLabel[] flag=new JLabel[f];
+
+                for (int i = 0; i < f; i++) {
+                    flag[i]=new JLabel("h");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != f - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
+            }
+
+            if(c > 0){
+                rs = dCon.getScheduledMoviesRecordsByHallC();
+                rs.next();
+                if(f > 0) {
+                    posX = 100;
+                    posY = posY + 250;
+                }
+                JLabel schedual_Lbl = new JLabel("D-BOX Hall Movies: ");
+                schedual_Lbl.setBounds(100, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
+
+                JLabel[] Schedual_id = new JLabel[c];
+                JLabel[] movie_picture = new JLabel[c];
+                JLabel[] movie_name = new JLabel[c];
+                JPanel[] movie_pnl = new JPanel[c];
+                JLabel[] flag=new JLabel[c];
+
+                for (int i = 0; i < c; i++) {
+                    flag[i]=new JLabel("h");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != c - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
+            }
+
+            if(d > 0){
+                rs = dCon.getScheduledMoviesRecordsByHallD();
+                rs.next();
+                if(c > 0) {
+                    posX = 100;
+                    posY = posY + 250;
+                }
+                JLabel schedual_Lbl = new JLabel("Big Hall Movies: ");
+                schedual_Lbl.setBounds(100, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
+
+                JLabel[] Schedual_id = new JLabel[d];
+                JLabel[] movie_picture = new JLabel[d];
+                JLabel[] movie_name = new JLabel[d];
+                JPanel[] movie_pnl = new JPanel[d];
+                JLabel[] flag=new JLabel[d];
+
+                for (int i = 0; i < d; i++) {
+                    flag[i]=new JLabel("h");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != d - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
+            }
+
+            if(e > 0){
+                rs = dCon.getScheduledMoviesRecordsByHallE();
+                rs.next();
+                if(d > 0) {
+                    posX = 100;
+                    posY = posY + 250;
+                }
+                JLabel schedual_Lbl = new JLabel("Small Hall Movies: ");
+                schedual_Lbl.setBounds(100, posY, 500, 40);
+                schedual_Lbl.setFont(new Font("Times new roman", Font.BOLD, 25));
+                innerPnl.add(schedual_Lbl);
+                posY = posY + 45;
+
+                JLabel[] Schedual_id = new JLabel[e];
+                JLabel[] movie_picture = new JLabel[e];
+                JLabel[] movie_name = new JLabel[e];
+                JPanel[] movie_pnl = new JPanel[e];
+                JLabel[] flag=new JLabel[e];
+
+                for (int i = 0; i < e; i++) {
+                    flag[i]=new JLabel("h");
+                    Blob b = rs.getBlob(3);
+                    Image img = ImageIO.read(b.getBinaryStream()).getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+
+                    Schedual_id[i] = new JLabel(rs.getString(1));
+                    movie_picture[i] = new JLabel(icon);
+                    movie_picture[i].setBounds(0, 0, 200, 200);
+
+                    movie_name[i] = new JLabel("  " + rs.getString(2));
+                    movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                    movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                    Schedual_id[i].setVisible(false);
+                    movie_pnl[i] = new JPanel();
+                    movie_pnl[i].setLayout(null);
+                    movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(Schedual_id[i]);
+                    movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].setBackground(Color.WHITE);
+                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    movie_pnl[i].addMouseListener(hnd);
+                    posX = (posX + 225) % 900;
+
+                    if (posX == 100 && i != e - 1) {
+                        posY = posY + 250;
+                    }
+
+                    innerPnl.add(movie_pnl[i]);
+                    rs.next();
+                }
             }
         }
         innerPnl.setPreferredSize(new Dimension(950, posY + 250));
@@ -184,7 +476,7 @@ public class HomePage {
         int posX = 100, posY = 10;
         int n = dCon.getNumberOfSearchResults(searchText);
       //  mID = String.valueOf(dCon.getMovieID(searchText));
-       
+
         if (n <= 0) {
 
             JLabel empty = new JLabel("<html>:(<br/>  No results founds, try with different spellings</html>");
@@ -216,7 +508,7 @@ public class HomePage {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                
+
 
                 Schedual_id[i] = new JLabel(rs.getString(1));
                 movie_picture[i] = new JLabel(icon);
