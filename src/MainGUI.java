@@ -193,7 +193,7 @@ public class MainGUI {
                 changePassFrame.miniFrame.setIconImage(logo.getImage());
                 changePassFrame.cancel.addActionListener(hnd);
                 changePassFrame.confirm.addActionListener(hnd);
-            } else if (e.getActionCommand().equals("Add")) {
+            } else if (e.getActionCommand().equals("Add Movie")) {
                 addMovieFrame = new AddMovie();
                 addMovieFrame.miniFrame.setLocationRelativeTo(fr);
                 addMovieFrame.miniFrame.setIconImage(logo.getImage());
@@ -218,10 +218,28 @@ public class MainGUI {
             }  else if (e.getActionCommand().equals("Close")) {
                 if (addFoodFrame != null) {
                     addFoodFrame.miniFrame.dispose();
+                    try {
+						Ad.updateDashboard();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 } else if (changePassFrame != null) {
                     changePassFrame.miniFrame.dispose();
                 } else if (addMovieFrame != null) {
                     addMovieFrame.miniFrame.dispose();
+                    try {
+						Ad.updateDashboard();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             } else if (e.getActionCommand().equals("Confirm")) {
                 int n = dCon.updatePassword(sIn.CNIC.getText(), changePassFrame.oldPass.getText(), changePassFrame.newPass.getText());
@@ -269,15 +287,14 @@ public class MainGUI {
                 chooser.addChoosableFileFilter(filter);
                 chooser.setAcceptAllFileFilterUsed(false);
                 File pic = chooser.getSelectedFile();
-                System.out.println("in here mahes");
+
                 try {
                     if (pic != null) {
                         String path = pic.getAbsolutePath();
                         File image = new File(path);
-                        System.out.println("in here mahes _1");
+
                         addFoodFrame.preview.setText(pic.getName());
                         addFoodFrame.imageStream = new FileInputStream(image);
-                        System.out.println("in here mahes_2");
                     }
 
                 } catch (FileNotFoundException ex) {
@@ -294,6 +311,15 @@ public class MainGUI {
                     addMovieFrame.descTextField.setText("");
                     addMovieFrame.dirTextField.setText("");
                     addMovieFrame.summryTextField.setText("");
+                    try {
+						Ad.updateDashboard();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             }  else if (e.getActionCommand().equals("Save Food")) {
                 if (addFoodFrame.titleTextField.getText().trim().equals("") || addFoodFrame.priceTextField.getText().trim().equals("")) {
@@ -302,6 +328,15 @@ public class MainGUI {
                     dCon.addFoodRecord(addFoodFrame.titleTextField.getText(), addFoodFrame.priceTextField.getText(), addFoodFrame.imageStream);
                     addFoodFrame.titleTextField.setText("");
                     addFoodFrame.priceTextField.setText("");
+                    try {
+						Ad.updateDashboard();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             } else if (e.getActionCommand().equals("Confirm Booking")) {
             	dCon.confirmBooking(id, MD.given_id, MD.sType.getSelectedItem().toString(), MD.sQuantity.getSelectedItem().toString());
@@ -327,7 +362,6 @@ public class MainGUI {
                 }
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Food")) {
-                System.out.println("in delete food function");
                 dCon.deleteFood(FDUSR.given_id);
                 try {
                     Ad.updateDashboard();
@@ -338,7 +372,6 @@ public class MainGUI {
                 }
                 FDUSR.FDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Order Food")) {
-                System.out.println("in order food function");
                 dCon.confirmFood(id, FDUSR.datePicker.getJFormattedTextField().getText(), FDUSR.given_id, FDUSR.sQuantity.getSelectedItem().toString());
                 try {
                     Ad.updateDashboard();

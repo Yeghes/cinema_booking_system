@@ -59,7 +59,7 @@ public class Admin {
         pswdBtn.setFocusPainted(false);
         pswdBtn.setBorderPainted(false);
         pswdBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        addBtn = new JButton("Add");
+        addBtn = new JButton("Add Movie");
         addBtn.setFocusPainted(false);
         addBtn.setBorderPainted(false);
         addBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -86,7 +86,7 @@ public class Admin {
 
         userNameLbl.setBounds(0, 30, 500, 30);
 
-        addBtn.setBounds(520, 30, 90, 30);
+        addBtn.setBounds(500, 30, 110, 30);
         addBtn.setBackground(Color.BLACK);
         addBtn.setForeground(Color.WHITE);
 
