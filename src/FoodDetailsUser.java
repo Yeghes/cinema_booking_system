@@ -49,7 +49,7 @@ public class FoodDetailsUser {
 
         FDetailsFr = new JFrame("Food Details");
 
-        seat_type = new JLabel("Seat type");
+        seat_type = new JLabel("Date");
         seat_type.setBounds(320, 300, 150, 40);
 
 

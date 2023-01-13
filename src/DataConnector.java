@@ -582,7 +582,6 @@ public class DataConnector {
     }
 
     public void confirmFood(String uid, String date, String food_id, String quantity) {
-	 System.out.println("in confirm booking function");
         try {
             String sql = "insert into foodbooking (User_Login_ID,S_Date,Food_ID,Quantity) VALUES(?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
