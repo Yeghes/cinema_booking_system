@@ -1,1 +1,1 @@
-CAT201 Project - Cinema Ticket Booking System
+CAT201 Project (Group 45) - Cinema Ticket Booking System
