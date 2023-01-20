@@ -41,7 +41,7 @@ public class Dashboard {
     private void initGUI() throws SQLException {
 
         dashboardPnl = new JPanel();
-        dashboardPnl.setBackground(Color.BLACK);
+        dashboardPnl.setBackground(new Color(222, 243, 253));
         dCon = new DataConnector();
 
         innerPanel = new JPanel();
@@ -67,8 +67,8 @@ public class Dashboard {
         userNameLbl = new JLabel("");
         userNameLbl.setFont(new Font("Times new roman", Font.BOLD, 18));
         userNameLbl.setOpaque(true);
-        userNameLbl.setBackground(Color.black);
-        userNameLbl.setForeground(Color.WHITE);
+        userNameLbl.setBackground(new Color(222, 243, 253));
+        userNameLbl.setForeground(Color.BLACK);
 
         userNameLbl.setText("       You're signed in as " + this.uName);
 
@@ -79,16 +79,16 @@ public class Dashboard {
         userNameLbl.setBounds(0, 30, 500, 30);
 
         pswdBtn.setBounds(710, 30, 150, 30);
-        pswdBtn.setBackground(Color.BLACK);
-        pswdBtn.setForeground(Color.WHITE);
+        pswdBtn.setBackground(new Color(222, 243, 253));
+        pswdBtn.setForeground(Color.BLACK);
 
         homeBtn.setBounds(870, 30, 100, 30);
-        homeBtn.setBackground(Color.BLACK);
-        homeBtn.setForeground(Color.WHITE);
+        homeBtn.setBackground(new Color(222, 243, 253));
+        homeBtn.setForeground(Color.BLACK);
 
         lOutBtn.setBounds(980, 30, 100, 30);
-        lOutBtn.setBackground(Color.BLACK);
-        lOutBtn.setForeground(Color.WHITE);
+        lOutBtn.setBackground(new Color(222, 243, 253));
+        lOutBtn.setForeground(Color.BLACK);
 
         pswdBtn.addActionListener(hnd);
         lOutBtn.addActionListener(hnd);
@@ -214,7 +214,7 @@ public class Dashboard {
             JLabel[] ticket_seat = new JLabel[q];
             JLabel[] detail_separator = new JLabel[q];
             JPanel[] movie_pnl = new JPanel[q];
-
+            
             for (int i = 0; i < q; i++) {
 
                 Blob b = ps.getBlob(5);

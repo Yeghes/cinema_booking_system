@@ -33,10 +33,10 @@ public class AddMovie {
     }
 
     public void initGUI() {
-        
+
         miniFrame = new JFrame("Add Movie");
         titleLbl = new JLabel("Movie Title:");
-        genereLbl = new JLabel("Movie Genere:");
+        genereLbl = new JLabel("Movie Genre:");
         durationLbl = new JLabel("Movie Duration:");
         dirLbl = new JLabel("Movie Director Name:");
         descripLbl = new JLabel("Movie Description:");
@@ -64,9 +64,9 @@ public class AddMovie {
         descTextField.setBounds(30, 370, 350, 30);
         summryLbl.setBounds(30, 420, 150, 30);
         summryTextField.setBounds(30, 450, 350, 30);
-        
-        
-        
+
+
+
         preview.setBounds(500, 20, 200, 200);
         preview.setEditable(false);
         choosePhoto.setBounds(550, 220, 100, 30);

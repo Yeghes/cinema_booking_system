@@ -352,7 +352,7 @@ public class MainGUI {
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Movie")) {
 
-                dCon.deleteFood(MD.given_id);
+                dCon.deleteMovie(MD.given_id);
                 try {
                     Ad.updateDashboard();
                 } catch (SQLException ex) {
@@ -362,7 +362,7 @@ public class MainGUI {
                 }
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Food")) {
-                dCon.deleteFood(FDUSR.given_id);
+                dCon.deleteFood(FD.given_id);
                 try {
                     Ad.updateDashboard();
                 } catch (SQLException ex) {
@@ -370,7 +370,7 @@ public class MainGUI {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                FDUSR.FDetailsFr.dispose();
+                FD.FDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Order Food")) {
                 dCon.confirmFood(id, FDUSR.datePicker.getJFormattedTextField().getText(), FDUSR.given_id, FDUSR.sQuantity.getSelectedItem().toString());
                 try {
