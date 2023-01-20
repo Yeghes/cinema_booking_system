@@ -61,8 +61,8 @@ public class HomePage {
         searchBtn.setBorder(new LineBorder(Color.WHITE));
         searchBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         homeReload = new JButton("\u2770 Home");
-        homeReload.setBackground(Color.BLACK);
-        homeReload.setForeground(Color.WHITE);
+        homeReload.setBackground(new Color(222, 243, 253));
+        homeReload.setForeground(Color.BLACK);
         homeReload.setFocusPainted(false);
 
         searchBtn.addActionListener(hnd);
@@ -76,31 +76,31 @@ public class HomePage {
         userNameLbl = new JLabel("");
         userNameLbl.setFont(new Font("Times new roman", Font.BOLD, 18));
         userNameLbl.setOpaque(true);
-        userNameLbl.setBackground(Color.black);
-        userNameLbl.setForeground(Color.WHITE);
+        userNameLbl.setBackground(new Color(222, 243, 253));
+        userNameLbl.setForeground(Color.BLACK);
 
         mainPnl.setLayout(null);
-        mainPnl.setBackground(Color.BLACK);
+        mainPnl.setBackground(new Color(222, 243, 253));
         mainPnl.setSize(1100, 900);
         innerPnl.setBounds(100, 100, 1000, 500);
 
         userNameLbl.setBounds(0, 30, 500, 30);
         search.setBounds(503, 30, 304, 30);
         searchBtn.setBounds(807, 30, 50, 30);
-        searchBtn.setBackground(Color.BLACK);
-        searchBtn.setForeground(Color.WHITE);
+        searchBtn.setBackground(new Color(222, 243, 253));
+        searchBtn.setForeground(Color.BLACK);
 
         dashBtn.setBounds(870, 30, 115, 30);
         dashBtn.setBorderPainted(false);
         dashBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        dashBtn.setBackground(Color.BLACK);
-        dashBtn.setForeground(Color.WHITE);
+        dashBtn.setBackground(new Color(222, 243, 253));
+        dashBtn.setForeground(Color.BLACK);
 
         lOutBtn.setBounds(985, 30, 115, 30);
         lOutBtn.setBorderPainted(false);
         lOutBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        lOutBtn.setBackground(Color.BLACK);
-        lOutBtn.setForeground(Color.WHITE);
+        lOutBtn.setBackground(new Color(222, 243, 253));
+        lOutBtn.setForeground(Color.BLACK);
 
         mainPnl.add(userNameLbl);
         mainPnl.add(dashBtn);
@@ -202,6 +202,7 @@ public class HomePage {
                 JLabel[] Schedual_id = new JLabel[a];
                 JLabel[] movie_picture = new JLabel[a];
                 JLabel[] movie_name = new JLabel[a];
+                JLabel[] movie_dtntime = new JLabel[a];
                 JPanel[] movie_pnl = new JPanel[a];
                 JLabel[] flag=new JLabel[a];
 
@@ -219,21 +220,26 @@ public class HomePage {
                     movie_name[i].setBounds(0, 0 + 200, 200, 35);
                     movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+                    movie_dtntime[i] = new JLabel("  " + rs.getString(6) + " (" + rs.getString(5) + ")");
+                    movie_dtntime[i].setBounds(0, 0 + 240, 200, 35);
+                    movie_dtntime[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
                     Schedual_id[i].setVisible(false);
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
+                    movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
-                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     movie_pnl[i].addMouseListener(hnd);
                     posX = (posX + 225) % 900;
 
                     if (posX == 100 && i != a - 1) {
-                        posY = posY + 250;
+                        posY = posY + 295;
                     }
 
                     innerPnl.add(movie_pnl[i]);
@@ -246,7 +252,7 @@ public class HomePage {
                 rs.next();
                 if(a > 0) {
                     posX = 100;
-                    posY = posY + 250;
+                    posY = posY + 295;
                 }
                 JLabel schedual_Lbl = new JLabel("IMAX Hall Movies: ");
                 schedual_Lbl.setBounds(posX, posY, 500, 40);
@@ -259,6 +265,7 @@ public class HomePage {
                 JLabel[] movie_picture = new JLabel[f];
                 JLabel[] movie_name = new JLabel[f];
                 JPanel[] movie_pnl = new JPanel[f];
+                JLabel[] movie_dtntime = new JLabel[f];
                 JLabel[] flag=new JLabel[f];
 
                 for (int i = 0; i < f; i++) {
@@ -275,21 +282,26 @@ public class HomePage {
                     movie_name[i].setBounds(0, 0 + 200, 200, 35);
                     movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+                    movie_dtntime[i] = new JLabel("  " + rs.getString(6) + " (" + rs.getString(5) + ")");
+                    movie_dtntime[i].setBounds(0, 0 + 240, 200, 35);
+                    movie_dtntime[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
                     Schedual_id[i].setVisible(false);
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
                     movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
-                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     movie_pnl[i].addMouseListener(hnd);
                     posX = (posX + 225) % 900;
 
                     if (posX == 100 && i != f - 1) {
-                        posY = posY + 250;
+                        posY = posY + 295;
                     }
 
                     innerPnl.add(movie_pnl[i]);
@@ -302,7 +314,7 @@ public class HomePage {
                 rs.next();
                 if(f > 0) {
                     posX = 100;
-                    posY = posY + 250;
+                    posY = posY + 295;
                 }
                 JLabel schedual_Lbl = new JLabel("D-BOX Hall Movies: ");
                 schedual_Lbl.setBounds(100, posY, 500, 40);
@@ -315,6 +327,7 @@ public class HomePage {
                 JLabel[] movie_name = new JLabel[c];
                 JPanel[] movie_pnl = new JPanel[c];
                 JLabel[] flag=new JLabel[c];
+                JLabel[] movie_dtntime = new JLabel[c];
 
                 for (int i = 0; i < c; i++) {
                     flag[i]=new JLabel("h");
@@ -330,21 +343,26 @@ public class HomePage {
                     movie_name[i].setBounds(0, 0 + 200, 200, 35);
                     movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+                    movie_dtntime[i] = new JLabel("  " + rs.getString(6) + " (" + rs.getString(5) + ")");
+                    movie_dtntime[i].setBounds(0, 0 + 240, 200, 35);
+                    movie_dtntime[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
                     Schedual_id[i].setVisible(false);
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
                     movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
-                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     movie_pnl[i].addMouseListener(hnd);
                     posX = (posX + 225) % 900;
 
                     if (posX == 100 && i != c - 1) {
-                        posY = posY + 250;
+                        posY = posY + 295;
                     }
 
                     innerPnl.add(movie_pnl[i]);
@@ -357,7 +375,7 @@ public class HomePage {
                 rs.next();
                 if(c > 0) {
                     posX = 100;
-                    posY = posY + 250;
+                    posY = posY + 295;
                 }
                 JLabel schedual_Lbl = new JLabel("Big Hall Movies: ");
                 schedual_Lbl.setBounds(100, posY, 500, 40);
@@ -370,6 +388,7 @@ public class HomePage {
                 JLabel[] movie_name = new JLabel[d];
                 JPanel[] movie_pnl = new JPanel[d];
                 JLabel[] flag=new JLabel[d];
+                JLabel[] movie_dtntime = new JLabel[d];
 
                 for (int i = 0; i < d; i++) {
                     flag[i]=new JLabel("h");
@@ -385,21 +404,26 @@ public class HomePage {
                     movie_name[i].setBounds(0, 0 + 200, 200, 35);
                     movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+                    movie_dtntime[i] = new JLabel("  " + rs.getString(6) + " (" + rs.getString(5) + ")");
+                    movie_dtntime[i].setBounds(0, 0 + 240, 200, 35);
+                    movie_dtntime[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
                     Schedual_id[i].setVisible(false);
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
                     movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
-                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     movie_pnl[i].addMouseListener(hnd);
                     posX = (posX + 225) % 900;
 
                     if (posX == 100 && i != d - 1) {
-                        posY = posY + 250;
+                        posY = posY + 295;
                     }
 
                     innerPnl.add(movie_pnl[i]);
@@ -412,7 +436,7 @@ public class HomePage {
                 rs.next();
                 if(d > 0) {
                     posX = 100;
-                    posY = posY + 250;
+                    posY = posY + 295;
                 }
                 JLabel schedual_Lbl = new JLabel("Small Hall Movies: ");
                 schedual_Lbl.setBounds(100, posY, 500, 40);
@@ -425,6 +449,7 @@ public class HomePage {
                 JLabel[] movie_name = new JLabel[e];
                 JPanel[] movie_pnl = new JPanel[e];
                 JLabel[] flag=new JLabel[e];
+                JLabel[] movie_dtntime = new JLabel[e];
 
                 for (int i = 0; i < e; i++) {
                     flag[i]=new JLabel("h");
@@ -440,21 +465,27 @@ public class HomePage {
                     movie_name[i].setBounds(0, 0 + 200, 200, 35);
                     movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
 
+
+                    movie_dtntime[i] = new JLabel("  " + rs.getString(6) + " (" + rs.getString(5) + ")");
+                    movie_dtntime[i].setBounds(0, 0 + 240, 200, 35);
+                    movie_dtntime[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
                     Schedual_id[i].setVisible(false);
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
                     movie_pnl[i].add(movie_name[i]);
+                    movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
-                    movie_pnl[i].setBounds(posX, posY, 200, 235);
+                    movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     movie_pnl[i].addMouseListener(hnd);
                     posX = (posX + 225) % 900;
 
                     if (posX == 100 && i != e - 1) {
-                        posY = posY + 250;
+                        posY = posY + 295;
                     }
 
                     innerPnl.add(movie_pnl[i]);
@@ -462,7 +493,7 @@ public class HomePage {
                 }
             }
         }
-        innerPnl.setPreferredSize(new Dimension(950, posY + 250));
+        innerPnl.setPreferredSize(new Dimension(950, posY + 295));
         scrollPane.add(innerPnl);
         mainPnl.add(scrollPane);
 
