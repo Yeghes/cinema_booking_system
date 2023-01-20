@@ -424,6 +424,7 @@ public class DataConnector {
     public void deleteFood(String given_id) {
         try {
             stat.executeUpdate("Delete From food where Food_ID='" + given_id + "'");
+            JOptionPane.showMessageDialog(null, "Successful", "Opretion Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Try Again", "Opretion Failed", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -438,7 +439,7 @@ public class DataConnector {
     // getting scheduled movies by group
     public ResultSet getScheduledMoviesRecordsByHallA() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = '3d_hall'");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.Starting_Time, SCHEDULE.S_Date FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = '3d_hall'");
 
             return rs;
 
@@ -467,7 +468,7 @@ public class DataConnector {
 
     public ResultSet getScheduledMoviesRecordsByHallB() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = 'Imax_hall'");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.Starting_Time, SCHEDULE.S_Date FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND SCHEDULE.Hall_Name = 'Imax_hall'");
 
             return rs;
 
@@ -496,7 +497,7 @@ public class DataConnector {
 
     public ResultSet getScheduledMoviesRecordsByHallC() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'D-box_hall_1' OR SCHEDULE.Hall_Name = 'D-box_hall_2')");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.Starting_Time, SCHEDULE.S_Date FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'D-box_hall_1' OR SCHEDULE.Hall_Name = 'D-box_hall_2')");
 
             return rs;
 
@@ -525,7 +526,7 @@ public class DataConnector {
 
     public ResultSet getScheduledMoviesRecordsByHallD() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'commercial_huge_1_hall' OR SCHEDULE.Hall_Name = 'commercial_huge_2_hall')");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.Starting_Time, SCHEDULE.S_Date FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'commercial_huge_1_hall' OR SCHEDULE.Hall_Name = 'commercial_huge_2_hall')");
 
             return rs;
 
@@ -554,7 +555,7 @@ public class DataConnector {
 
     public ResultSet getScheduledMoviesRecordsByHallE() {
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'small_hall_1' OR SCHEDULE.Hall_Name = 'small_hall_2')");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.Starting_Time, SCHEDULE.S_Date FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND (SCHEDULE.Hall_Name = 'small_hall_1' OR SCHEDULE.Hall_Name = 'small_hall_2')");
 
             return rs;
 
