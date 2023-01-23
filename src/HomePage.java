@@ -250,7 +250,7 @@ public class HomePage {
             if(f > 0){
                 rs = dCon.getScheduledMoviesRecordsByHallB();
                 rs.next();
-                if(a > 0) {
+                if(a > 0 || fd_cnt > 0) {
                     posX = 100;
                     posY = posY + 295;
                 }
@@ -312,7 +312,7 @@ public class HomePage {
             if(c > 0){
                 rs = dCon.getScheduledMoviesRecordsByHallC();
                 rs.next();
-                if(f > 0) {
+                if(f > 0 || fd_cnt > 0 || a > 0) {
                     posX = 100;
                     posY = posY + 295;
                 }
@@ -373,7 +373,7 @@ public class HomePage {
             if(d > 0){
                 rs = dCon.getScheduledMoviesRecordsByHallD();
                 rs.next();
-                if(c > 0) {
+                if(c > 0 || f > 0 || fd_cnt > 0 || a > 0) {
                     posX = 100;
                     posY = posY + 295;
                 }
@@ -434,7 +434,7 @@ public class HomePage {
             if(e > 0){
                 rs = dCon.getScheduledMoviesRecordsByHallE();
                 rs.next();
-                if(d > 0) {
+                if(d > 0 || c > 0 || f > 0 || fd_cnt > 0 || a > 0) {
                     posX = 100;
                     posY = posY + 295;
                 }
