@@ -229,9 +229,9 @@ public class HomePage {
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
                     movie_pnl[i].add(movie_dtntime[i]);
-                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
                     movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -290,10 +290,10 @@ public class HomePage {
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
-                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
                     movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -351,10 +351,10 @@ public class HomePage {
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
-                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
                     movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -412,10 +412,10 @@ public class HomePage {
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
-                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
                     movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -474,10 +474,10 @@ public class HomePage {
                     movie_pnl[i] = new JPanel();
                     movie_pnl[i].setLayout(null);
                     movie_pnl[i].add(movie_picture[i]);
-                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].add(movie_dtntime[i]);
                     movie_pnl[i].add(Schedual_id[i]);
                     movie_pnl[i].add(flag[i]);
+                    movie_pnl[i].add(movie_name[i]);
                     movie_pnl[i].setBackground(Color.WHITE);
                     movie_pnl[i].setBounds(posX, posY, 200, 280);
                     movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
