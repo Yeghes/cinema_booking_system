@@ -524,6 +524,8 @@ public class HomePage {
             JLabel[] movie_picture = new JLabel[n];
             JLabel[] movie_name = new JLabel[n];
             JPanel[] movie_pnl = new JPanel[n];
+            JLabel[] movie_hall_name = new JLabel[n];
+            JLabel[] movie_dtntime = new JLabel[n];
             JLabel[] flag=new JLabel[n];
             homeReload.setBounds(posX, posY, 100, 40);
             posY = posY + 110;
@@ -546,8 +548,17 @@ public class HomePage {
                 movie_picture[i].setBounds(0, 0, 200, 200);
 
                 movie_name[i] = new JLabel("  " + rs.getString(2));
-                movie_name[i].setBounds(0, 0 + 200, 200, 35);
+                movie_name[i].setBounds(0, 0 + 200, 200, 30);
                 movie_name[i].setFont(new Font("Times new roman", Font.BOLD, 18));
+
+                movie_hall_name[i] = new JLabel("  " + rs.getString(4));
+                movie_hall_name[i].setBounds(0, 0 + 230, 200, 20);
+                movie_hall_name[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+                
+                movie_dtntime[i] = new JLabel("  " + rs.getString(5) + " (" + rs.getString(6) + ")");
+                movie_dtntime[i].setBounds(0, 0 + 250, 200, 20);
+                movie_dtntime[i].setFont(new Font("Times new roman", Font.ITALIC, 15));
+                
 
                 Schedual_id[i].setVisible(false);
                 movie_pnl[i] = new JPanel();
@@ -556,15 +567,17 @@ public class HomePage {
                 movie_pnl[i].add(movie_name[i]);
                 movie_pnl[i].add(Schedual_id[i]);
                 movie_pnl[i].add(flag[i]);
-
+                movie_pnl[i].add(movie_hall_name[i]);
+                movie_pnl[i].add(movie_dtntime[i]);
+                
                 movie_pnl[i].setBackground(Color.WHITE);
-                movie_pnl[i].setBounds(posX, posY, 200, 235);
+                movie_pnl[i].setBounds(posX, posY, 200, 290);
                 movie_pnl[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 movie_pnl[i].addMouseListener(hnd);
-                posX = (posX + 225) % 900;
+                posX = (posX + 265) % 900;
 
                 if (posX == 100 && i != n - 1) {
-                    posY = posY + 250;
+                    posY = posY + 300;
                 }
 
                 innerPnl.add(movie_pnl[i]);
