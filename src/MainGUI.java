@@ -341,14 +341,16 @@ public class MainGUI {
             } else if (e.getActionCommand().equals("Confirm Booking")) {
             	dCon.confirmBooking(id, MD.given_id, MD.sType.getSelectedItem().toString(), MD.sQuantity.getSelectedItem().toString());
                 MD.MDetailsFr.dispose();
-            } else if (e.getActionCommand().equals("Cancle Booking")) {
-
+            } else if (e.getActionCommand().equals("Cancel Booking")) {
                 dCon.cancelBooking(id, MD.given_id);
                 try {
-                    DB.updateDashboard();
+                    Ad.updateDashboard();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                }
+                } catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 MD.MDetailsFr.dispose();
             } else if (e.getActionCommand().equals("Delete Movie")) {
 
@@ -404,7 +406,7 @@ public class MainGUI {
             MD.MDetailsFr.setLocationRelativeTo(fr);
             MD.MDetailsFr.setIconImage(logo.getImage());
             MD.given_id = sid;
-            JLabel movie_name, movie_picture, rate, date, time;
+            JLabel movie_name, movie_picture, rate, date, time, rate_twin, rate_vip;
             JButton cancleBookBtn;
 
             try {
@@ -420,14 +422,18 @@ public class MainGUI {
                 movie_name = new JLabel(rs.getString(1));
                 movie_name.setBounds(320, 20, 250, 40);
                 movie_name.setFont(new Font("Times new roman", Font.BOLD, 28));
-                rate = new JLabel("Price: " + rs.getString(3) + "/-");
+                rate = new JLabel("Price: RM " + rs.getString(3));
                 rate.setBounds(320, 65, 200, 20);
+                rate_twin = new JLabel("Price Twin: RM " + rs.getString(6));
+                rate_twin.setBounds(320, 85, 200, 20);
+                rate_vip = new JLabel("Price Vip: RM " + rs.getString(7));
+                rate_vip.setBounds(320, 105, 200, 20);
                 date = new JLabel("Date: " + rs.getString(4));
-                date.setBounds(320, 85, 200, 20);
+                date.setBounds(320, 125, 200, 20);
                 time = new JLabel("Time: " + rs.getString(5));
-                time.setBounds(320, 105, 200, 20);
+                time.setBounds(320, 145, 200, 20);
 
-                cancleBookBtn = new JButton("Cancle Booking");
+                cancleBookBtn = new JButton("Cancel Booking");
                 cancleBookBtn.addActionListener(hnd);
                 cancleBookBtn.setBounds(350, 400, 300, 50);
                 cancleBookBtn.setBackground(Color.black);
@@ -436,6 +442,8 @@ public class MainGUI {
                 MD.MDetailsFr.add(movie_name);
                 MD.MDetailsFr.add(movie_picture);
                 MD.MDetailsFr.add(rate);
+                MD.MDetailsFr.add(rate_twin);
+                MD.MDetailsFr.add(rate_vip);
                 MD.MDetailsFr.add(date);
                 MD.MDetailsFr.add(time);
                 MD.MDetailsFr.add(cancleBookBtn);

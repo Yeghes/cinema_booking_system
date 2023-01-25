@@ -159,7 +159,7 @@ public class DataConnector {
         searchText = searchText.trim();
         searchText = "%" + searchText + "%";
         try {
-            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND UPPER(movie_title) LIKE UPPER('" + searchText + "')");
+            rs = stat.executeQuery("SELECT SCHEDULE.SCHEDULE_ID, movie.Movie_Title, movie.Movie_Cover_Photo, SCHEDULE.Hall_Name, SCHEDULE.S_Date, SCHEDULE.Starting_Time FROM movie,SCHEDULE where SCHEDULE.MOVIE_ID = movie.Movie_ID AND schedule.s_date >= sysdate() AND UPPER(movie_title) LIKE UPPER('" + searchText + "')");
 
             return rs;
 
@@ -321,10 +321,16 @@ public class DataConnector {
 
     public void cancelBooking(String uid, String given_id) {
         try {
-            stat.executeUpdate("Delete From ticket where User_Login_ID='" + uid + "'AND Schedule_ID='" + given_id + "'");
+            stat.executeUpdate("Delete From ticket where Schedule_ID='" + given_id + "'");
+            stat.executeUpdate("Delete From schedule where Schedule_ID='" + given_id + "'");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "You can't cancel this booking.s", "Failed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You can't cancel this booking.", "Failed", JOptionPane.INFORMATION_MESSAGE);
         }
+        // try {
+        //     stat.executeUpdate("Delete From schedule where Schedule_ID='" + given_id + "'");
+        // } catch (SQLException ex) {
+        //     JOptionPane.showMessageDialog(null, "You can't cancel this booking.", "Failed", JOptionPane.INFORMATION_MESSAGE);
+        // }
     }
 
     public void deleteMovie(String given_id) {
